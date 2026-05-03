@@ -20,7 +20,7 @@ const Home = () => {
       <section className="features">
         <div className="feature-card">
           <div className="feature-icon">📊</div>
-          <h3>Dynamic Trust Score</h3>
+          <h3>Dynamic Loyalty Score</h3>
           <p>Watch your commitment grow with a real-time score based on consistency and engagement.</p>
         </div>
         <div className="feature-card">

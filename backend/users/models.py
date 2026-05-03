@@ -19,13 +19,24 @@ class User(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
     relationship_status = models.CharField(max_length=1, choices=RELATIONSHIP_CHOICES, default='S')
+    email = models.EmailField(unique=True)
     partner_email = models.EmailField(blank=True, null=True)
-    trust_score = models.IntegerField(default=0)
+    loyalty_score = models.IntegerField(default=0)
     anniversary_date = models.DateField(null=True, blank=True)
     profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True)
+    couple = models.ForeignKey('couples.Couple', on_delete=models.SET_NULL, null=True, blank=True, related_name='members')
     
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
     def __str__(self):
-        return self.username
+        return self.email
+
+    @property
+    def partner(self):
+        if not self.couple:
+            return None
+        return self.couple.user1 if self.couple.user2 == self else self.couple.user2
 
 class PasswordResetOTP(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

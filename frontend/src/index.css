@@ -198,6 +198,86 @@ nav a:hover {
   color: var(--text-muted);
 }
 
+/* Couple Management */
+.couple-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.active {
+  background: #e6fffa;
+  color: #2ec4b6;
+}
+
+.status-badge.pending {
+  background: #fffaf0;
+  color: #ed8936;
+}
+
+.invite-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--bg-main);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.invite-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-small {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-small.accept {
+  background: var(--success);
+  color: white;
+}
+
+.btn-small.reject {
+  background: var(--primary);
+  color: white;
+}
+
+.breakup-btn {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.8rem;
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.breakup-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.muted-text {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 .auth-footer {
   text-align: center;
   margin-top: 2rem;

@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import UserDetails from './pages/UserDetails';
+import CoupleManagement from './pages/CoupleManagement';
+import DailyCheckIn from './pages/DailyCheckIn';
 import ForgotPassword from './pages/ForgotPassword';
 import Footer from './components/Footer';
 
@@ -36,7 +38,9 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li>
         {isAuthenticated ? (
           <>
+            <li><Link to="/checkin">Check-in</Link></li>
             <li><Link to="/profile">My Bond</Link></li>
+            <li><Link to="/couple">Partner</Link></li>
             <li><button onClick={handleLogout} className="nav-logout-btn">Logout</button></li>
           </>
         ) : (
@@ -60,6 +64,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<UserDetails />} />
+          <Route path="/couple" element={<CoupleManagement />} />
+          <Route path="/checkin" element={<DailyCheckIn />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </div>

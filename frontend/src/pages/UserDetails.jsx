@@ -21,7 +21,7 @@ const UserDetails = () => {
             username: 'LoveBird_24',
             email: 'romance@truetie.com',
             bio: 'Building a lifetime of memories together.',
-            trust_score: 85,
+            loyalty_score: 85,
             relationship_status: 'I',
             gender: 'F',
             anniversary_date: '2023-06-14'
@@ -55,11 +55,11 @@ const UserDetails = () => {
         
         <div className="trust-meter-container">
           <div className="trust-header">
-            <span>Trust Score</span>
-            <span className="trust-value">{user.trust_score}%</span>
+            <span>Loyalty Score</span>
+            <span className="trust-value">{user.loyalty_score}%</span>
           </div>
           <div className="trust-bar-bg">
-            <div className="trust-bar-fill" style={{ width: `${user.trust_score}%` }}></div>
+            <div className="trust-bar-fill" style={{ width: `${user.loyalty_score}%` }}></div>
           </div>
           <p className="trust-hint">Maintain daily check-ins to boost your score!</p>
         </div>
