@@ -1,0 +1,335 @@
+Build a mobile application called "TrueTie".
+
+TrueTie is a relationship commitment platform where couples earn rewards by maintaining loyalty and long-term commitment.
+
+The app should include:
+- User registration
+- Couple linking system
+- Loyalty tracking system
+- Reward unlocking system
+- Milestone tracking
+- Trust scoring model
+- Admin dashboard
+- Secure authentication
+
+-----------------------------------------------
+
+Create a secure authentication system with:
+
+- Email & password signup
+- OTP verification
+- Login & logout functionality
+- JWT token-based authentication
+- Password reset functionality
+- Account deletion option
+- Secure password hashing using bcrypt
+
+-----------------------------------------------
+
+Create a couple linking feature where:
+
+- User A can send a relationship invite link to User B
+- User B must accept the invite
+- Once accepted, both profiles are permanently linked
+- Store couple_id in database
+- Only 1 active partner allowed at a time
+- If breakup occurs, reset loyalty score
+
+
+-----------------------------------------------
+
+Build a loyalty tracking system that:
+
+- Tracks relationship duration (days together)
+- Tracks daily mutual check-ins
+- Tracks milestone dates (1 month, 3 months, 6 months, 1 year)
+- Calculates a loyalty score based on:
+    - Daily check-ins
+    - No break status
+    - Consistent activity
+- Deduct points if inactivity exceeds 7 days
+
+
+-----------------------------------------------
+
+Create a daily check-in system:
+
+- Both partners must check in daily
+- Check-in question example:
+    "Are you still committed to your partner today?"
+- Store timestamp
+- Only count loyalty day if BOTH partners confirm
+- Reset streak if one partner misses
+
+
+-----------------------------------------------
+
+
+Create a Trust Score system:
+
+Trust Score = 
+    (Days Together * 2)
+    + (Mutual Check-ins * 3)
+    + (Milestones Achieved * 10)
+    - (Missed Check-ins * 5)
+
+Trust Score Levels:
+0–100 = Bronze
+100–300 = Silver
+300–700 = Gold
+700+ = Platinum
+
+
+-----------------------------------------------
+
+Create a Trust Score system:
+
+Trust Score = 
+    (Days Together * 2)
+    + (Mutual Check-ins * 3)
+    + (Milestones Achieved * 10)
+    - (Missed Check-ins * 5)
+
+Trust Score Levels:
+0–100 = Bronze
+100–300 = Silver
+300–700 = Gold
+700+ = Platinum
+
+-----------------------------------------------
+
+Build reward unlocking logic:
+
+- Rewards unlock based on Trust Score tier
+- Bronze = Digital badges
+- Silver = Discount coupons
+- Gold = Gift vouchers
+- Platinum = Premium couple experiences
+
+Rewards should only unlock if:
+- Both partners agree
+- Relationship duration > 30 days
+
+-----------------------------------------------
+
+Create breakup handling logic:
+
+- Either partner can initiate breakup
+- Send confirmation to other partner
+- On confirmation:
+    - Freeze loyalty score
+    - Archive relationship data
+    - Allow reactivation within 30 days
+- After 30 days, permanently reset
+
+
+-----------------------------------------------
+
+Design couple dashboard showing:
+
+- Days together counter
+- Loyalty streak counter
+- Trust score meter
+- Upcoming milestone
+- Reward eligibility status
+- Relationship timeline
+
+
+-----------------------------------------------
+
+
+Build an admin dashboard with:
+
+- Total users
+- Active couples
+- Trust score distribution
+- Reward redemption tracking
+- Fraud detection alerts
+- Manual user suspension option
+
+
+-----------------------------------------------
+
+
+Implement fraud detection:
+
+- Detect frequent partner switching
+- Detect suspicious rapid check-ins
+- Detect multiple accounts from same IP
+- Flag suspicious accounts for review
+
+-----------------------------------------------
+
+
+Create push notification system:
+
+- Daily check-in reminder
+- Milestone celebration
+- Reward unlocked alert
+- Inactivity warning
+- Partner invite alert
+
+
+-----------------------------------------------
+
+
+Create database schema with tables:
+
+Users:
+- id
+- name
+- email
+- password_hash
+- created_at
+
+Couples:
+- id
+- partner1_id
+- partner2_id
+- relationship_start_date
+- status (active, paused, broken)
+
+Checkins:
+- id
+- couple_id
+- user_id
+- date
+- confirmed (true/false)
+
+TrustScores:
+- couple_id
+- score
+- tier
+
+-----------------------------------------------
+
+
+Add monetization:
+
+- Premium subscription for advanced analytics
+- Featured couple profile
+- Early reward unlocking
+- Relationship insights AI
+
+-----------------------------------------------
+
+
+Integrate AI Relationship Insights:
+
+- Analyze communication patterns
+- Provide couple growth suggestions
+- Suggest milestone surprises
+- Predict relationship risk score
+
+
+-----------------------------------------------
+
+TrueTie is a relationship commitment platform designed to encourage loyalty, trust, and long-term connection between couples.
+The app links two partners and tracks their commitment through daily mutual check-ins and milestone achievements.
+Couples earn a dynamic Trust Score based on consistency, engagement, and relationship duration.
+As their loyalty grows, they unlock exclusive rewards, digital badges, and special benefits.
+TrueTie combines behavioral tracking with gamification to make commitment measurable and meaningful.
+The platform also ensures privacy and secure authentication for both partners.
+With a structured reward model and trust-based system, TrueTie transforms real love into a growth-driven journey.
+
+
+WebPages Details:
+
+1️.Landing Page (Home Page)
+👉 Purpose: Explain your idea + attract users
+
+Include:
+
+What is TrueTie
+How it works (simple steps)
+Benefits
+“Join Now” button
+
+
+2️.Sign Up / Login Page
+👉 Purpose: User authentication
+
+Features:
+
+Email + password login
+Signup
+Later → Google login
+
+
+3️.Dashboard (Main Page after login)
+👉 Most important page
+
+Show:
+
+Partner name
+Current commitment
+Money added
+Progress bar
+Status (Active / Broken)
+
+
+4️.Create Relationship / Invite Partner
+👉 Core feature
+
+Flow:
+
+Enter partner email
+Send invite
+Accept invite
+Relationship created
+
+
+5️.Commitment Plan Page
+👉 Where users define “love contract”
+
+Features:
+
+Select duration (3 months / 6 / 1 year)
+Monthly amount
+Rules (basic for MVP)
+
+
+6️.Payment / Add Money Page
+👉 Financial layer
+
+Features:
+
+Add money (₹100, ₹500, etc.)
+Show total pool
+Transaction history
+
+
+7️.Progress / Activity Page
+👉 Engagement tracking
+
+Show:
+
+Days completed
+Check-ins
+Streaks (optional MVP lite version)
+
+
+
+
+8️.Profile / Settings Page
+👉 Basic user control
+
+Include:
+
+Name
+Email
+Logout
+Delete account
+
+
+
+8️.Games & Rewards Page
+🧠 Optional (Later, NOT MVP)
+Rewards page
+Notifications
+Chat between couples
+AI loyalty score
+
+
+
+
