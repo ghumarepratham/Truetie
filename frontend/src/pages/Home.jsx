@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setIsLoggedIn(!!localStorage.getItem('token'));
+    };
+    window.addEventListener('authChange', handleAuthChange);
+    return () => window.removeEventListener('authChange', handleAuthChange);
+  }, []);
+
   return (
     <div className="home-page">
       <header className="hero">
@@ -12,7 +22,11 @@ const Home = () => {
           Track your journey, earn rewards, and grow your trust together.
         </p>
         <div className="hero-btns">
-          <Link to="/signup" className="btn btn-primary">Start Your Journey</Link>
+          {isLoggedIn ? (
+            <Link to="/dashboard" className="btn btn-primary">Go to Dashboard</Link>
+          ) : (
+            <Link to="/signup" className="btn btn-primary">Start Your Journey</Link>
+          )}
           <Link to="/about" className="btn btn-outline">How it Works</Link>
         </div>
       </header>
@@ -38,7 +52,11 @@ const Home = () => {
       <section className="cta-banner">
         <h2>Ready to level up your love?</h2>
         <p>Join thousands of couples building a growth-driven relationship.</p>
-        <Link to="/signup" className="btn btn-primary">Join TrueTie Today</Link>
+        {isLoggedIn ? (
+          <Link to="/dashboard" className="btn btn-primary">Continue Your Journey</Link>
+        ) : (
+          <Link to="/signup" className="btn btn-primary">Join TrueTie Today</Link>
+        )}
       </section>
     </div>
   );

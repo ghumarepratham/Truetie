@@ -1,0 +1,50 @@
+[
+  {
+    "model": "rewards.reward",
+    "pk": 1,
+    "fields": {
+      "title": "Loyalty Badge",
+      "description": "A digital badge celebrating your first 30 days of commitment.",
+      "reward_type": "badge",
+      "tier_required": "Bronze",
+      "is_active": true,
+      "created_at": "2026-05-04T15:00:00Z"
+    }
+  },
+  {
+    "model": "rewards.reward",
+    "pk": 2,
+    "fields": {
+      "title": "Coffee Discount",
+      "description": "Enjoy 20% off at our partner cafes for a perfect date morning.",
+      "reward_type": "coupon",
+      "tier_required": "Silver",
+      "is_active": true,
+      "created_at": "2026-05-04T15:00:00Z"
+    }
+  },
+  {
+    "model": "rewards.reward",
+    "pk": 3,
+    "fields": {
+      "title": "Dinner Voucher",
+      "description": "A free dinner for two at selected premium restaurants.",
+      "reward_type": "voucher",
+      "tier_required": "Gold",
+      "is_active": true,
+      "created_at": "2026-05-04T15:00:00Z"
+    }
+  },
+  {
+    "model": "rewards.reward",
+    "pk": 4,
+    "fields": {
+      "title": "Couple Retreat",
+      "description": "A fully paid weekend getaway experience for the ultimate bond.",
+      "reward_type": "experience",
+      "tier_required": "Platinum",
+      "is_active": true,
+      "created_at": "2026-05-04T15:00:00Z"
+    }
+  }
+]

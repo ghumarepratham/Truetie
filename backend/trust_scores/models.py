@@ -16,6 +16,7 @@ class TrustScore(models.Model):
     mutual_checkins = models.IntegerField(default=0)
     milestones_achieved = models.IntegerField(default=0)
     missed_checkins = models.IntegerField(default=0)
+    is_frozen = models.BooleanField(default=False)
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):

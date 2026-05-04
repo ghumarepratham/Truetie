@@ -7,6 +7,9 @@ import UserDetails from './pages/UserDetails';
 import CoupleManagement from './pages/CoupleManagement';
 import DailyCheckIn from './pages/DailyCheckIn';
 import TrustScore from './pages/TrustScore';
+import Rewards from './pages/Rewards';
+import Breakup from './pages/Breakup';
+import CoupleDashboard from './pages/CoupleDashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import Footer from './components/Footer';
 
@@ -39,10 +42,13 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li>
         {isAuthenticated ? (
           <>
+            <li><Link to="/dashboard">Dashboard</Link></li>
             <li><Link to="/checkin">Check-in</Link></li>
             <li><Link to="/trust-score">Trust</Link></li>
+            <li><Link to="/rewards">Rewards</Link></li>
             <li><Link to="/profile">My Bond</Link></li>
             <li><Link to="/couple">Partner</Link></li>
+            <li><Link to="/breakup">Breakup</Link></li>
             <li><button onClick={handleLogout} className="nav-logout-btn">Logout</button></li>
           </>
         ) : (
@@ -69,6 +75,9 @@ function App() {
           <Route path="/couple" element={<CoupleManagement />} />
           <Route path="/checkin" element={<DailyCheckIn />} />
           <Route path="/trust-score" element={<TrustScore />} />
+          <Route path="/rewards" element={<Rewards />} />
+          <Route path="/breakup" element={<Breakup />} />
+          <Route path="/dashboard" element={<CoupleDashboard />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </div>

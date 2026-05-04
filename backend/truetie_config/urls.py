@@ -31,4 +31,5 @@ urlpatterns = [
     path("api/couples/", include("couples.urls")),
     path("api/checkins/", include("checkins.urls")),
     path("api/trust-score/", include("trust_scores.urls")),
+    path("api/rewards/", include("rewards.urls")),
 ]

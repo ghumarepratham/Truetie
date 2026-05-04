@@ -63,7 +63,7 @@ const UserDetails = () => {
         
         <div className="trust-meter-container">
           <div className="trust-header">
-            <span>{trust ? `${trust.tier} Status` : 'Personal Loyalty'}</span>
+            <span>{trust ? `${trust.tier} Status` : 'My Loyalty'}</span>
             <span className="trust-value">{trust ? trust.score : user.loyalty_score} pts</span>
           </div>
           <div className="trust-bar-bg">
