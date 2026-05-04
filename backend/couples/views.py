@@ -32,9 +32,13 @@ class AcceptInviteView(views.APIView):
         if user.couple and user.couple.status == 'active':
             return Response({"error": "You are already in an active relationship."}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Check if sender is already in a relationship
+        if invite.sender.couple and invite.sender.couple.status == 'active':
+            return Response({"error": "The sender is already in an active relationship."}, status=status.HTTP_400_BAD_REQUEST)
+
         with transaction.atomic():
             # Create the couple
-            couple = Couple.objects.create(user1=invite.sender, user2=user, status='active')
+            couple = Couple.objects.create(partner1=invite.sender, partner2=user, status='active')
             
             # Link users to the couple and update status
             user.couple = couple

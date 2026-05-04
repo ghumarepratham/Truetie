@@ -36,7 +36,7 @@ class User(AbstractUser):
     def partner(self):
         if not self.couple:
             return None
-        return self.couple.user1 if self.couple.user2 == self else self.couple.user2
+        return self.couple.partner1 if self.couple.partner2 == self else self.couple.partner2
 
 class PasswordResetOTP(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

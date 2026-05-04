@@ -3,18 +3,26 @@ import axios from 'axios';
 
 const UserDetails = () => {
   const [user, setUser] = useState(null);
+  const [loyalty, setLoyalty] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem('token');
-        // For development, we'll simulate a user if no token is found to see the UI
+        const headers = { Authorization: `Bearer ${token}` };
+        
         if (token) {
-          const response = await axios.get('http://127.0.0.1:8000/api/users/me/', {
-            headers: { Authorization: `Bearer ${token}` }
-          });
+          const response = await axios.get('http://127.0.0.1:8000/api/users/me/', { headers });
           setUser(response.data);
+
+          // Fetch Couple Loyalty if applicable
+          try {
+            const loyaltyRes = await axios.get('http://127.0.0.1:8000/api/checkins/loyalty-score/', { headers });
+            setLoyalty(loyaltyRes.data);
+          } catch (err) {
+            console.log("No couple loyalty found");
+          }
         } else {
           // Mock data for preview
           setUser({
@@ -55,13 +63,13 @@ const UserDetails = () => {
         
         <div className="trust-meter-container">
           <div className="trust-header">
-            <span>Loyalty Score</span>
-            <span className="trust-value">{user.loyalty_score}%</span>
+            <span>{loyalty ? 'Couple Loyalty' : 'Personal Loyalty'}</span>
+            <span className="trust-value">{loyalty ? loyalty.loyalty_score : user.loyalty_score} Points</span>
           </div>
           <div className="trust-bar-bg">
-            <div className="trust-bar-fill" style={{ width: `${user.loyalty_score}%` }}></div>
+            <div className="trust-bar-fill" style={{ width: `${Math.min(100, loyalty ? (loyalty.loyalty_score / 10) : user.loyalty_score)}%` }}></div>
           </div>
-          <p className="trust-hint">Maintain daily check-ins to boost your score!</p>
+          <p className="trust-hint">{loyalty ? `Streak: ${loyalty.current_streak} days` : 'Maintain daily check-ins to boost your score!'}</p>
         </div>
       </div>
 

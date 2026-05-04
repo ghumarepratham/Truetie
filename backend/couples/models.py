@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 import uuid
+from django.utils import timezone
 
 class Couple(models.Model):
     STATUS_CHOICES = [
@@ -9,22 +10,24 @@ class Couple(models.Model):
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user1 = models.ForeignKey(
+    partner1 = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
-        related_name='couples_as_user1'
+        related_name='couples_as_partner1'
     )
-    user2 = models.ForeignKey(
+    partner2 = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
-        related_name='couples_as_user2'
+        related_name='couples_as_partner2'
     )
+    relationship_start = models.DateField(default=timezone.now)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
+    loyalty_score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.user1.email} & {self.user2.email} ({self.status})"
+        return f"{self.partner1.email} & {self.partner2.email} ({self.status})"
 
 class RelationshipInvite(models.Model):
     STATUS_CHOICES = [

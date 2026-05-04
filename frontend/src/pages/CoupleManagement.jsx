@@ -91,6 +91,7 @@ const CoupleManagement = () => {
   };
 
   if (loading) return <div className="loading">Checking your connection...</div>;
+  if (!user && token) return <div className="loading">Loading user profile...</div>;
 
   return (
     <div className="couple-page">
@@ -110,7 +111,7 @@ const CoupleManagement = () => {
           {couple ? (
             <div className="couple-info">
               <div className="partner-details">
-                <p><strong>Partner:</strong> {couple.user1.email === user.email ? couple.user2.username : couple.user1.username}</p>
+                <p><strong>Partner:</strong> {couple.partner1?.email === user?.email ? couple.partner2?.username : couple.partner1?.username}</p>
                 <p><strong>Status:</strong> <span className="status-badge active">{couple.status}</span></p>
                 <p><strong>Since:</strong> {new Date(couple.created_at).toLocaleDateString()}</p>
               </div>

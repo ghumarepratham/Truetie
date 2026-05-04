@@ -3,9 +3,9 @@ from .models import Couple, RelationshipInvite
 
 @admin.register(Couple)
 class CoupleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user1', 'user2', 'status', 'created_at')
+    list_display = ('id', 'partner1', 'partner2', 'status', 'created_at')
     list_filter = ('status',)
-    search_fields = ('user1__email', 'user2__email')
+    search_fields = ('partner1__email', 'partner2__email')
 
 @admin.register(RelationshipInvite)
 class RelationshipInviteAdmin(admin.ModelAdmin):

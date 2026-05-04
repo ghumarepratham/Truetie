@@ -10,12 +10,12 @@ class UserSimpleSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'profile_picture', 'loyalty_score']
 
 class CoupleSerializer(serializers.ModelSerializer):
-    user1 = UserSimpleSerializer(read_only=True)
-    user2 = UserSimpleSerializer(read_only=True)
+    partner1 = UserSimpleSerializer(read_only=True)
+    partner2 = UserSimpleSerializer(read_only=True)
 
     class Meta:
         model = Couple
-        fields = ['id', 'user1', 'user2', 'status', 'created_at']
+        fields = ['id', 'partner1', 'partner2', 'relationship_start', 'status', 'loyalty_score', 'created_at']
 
 class RelationshipInviteSerializer(serializers.ModelSerializer):
     sender = UserSimpleSerializer(read_only=True)
