@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const UserDetails = () => {
   const [user, setUser] = useState(null);
-  const [loyalty, setLoyalty] = useState(null);
+  const [trust, setTrust] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,12 +16,12 @@ const UserDetails = () => {
           const response = await axios.get('http://127.0.0.1:8000/api/users/me/', { headers });
           setUser(response.data);
 
-          // Fetch Couple Loyalty if applicable
+          // Fetch Trust Score (Tier system)
           try {
-            const loyaltyRes = await axios.get('http://127.0.0.1:8000/api/checkins/loyalty-score/', { headers });
-            setLoyalty(loyaltyRes.data);
+            const trustRes = await axios.get('http://127.0.0.1:8000/api/trust-score/', { headers });
+            setTrust(trustRes.data);
           } catch (err) {
-            console.log("No couple loyalty found");
+            console.log("No trust score found");
           }
         } else {
           // Mock data for preview
@@ -63,13 +63,20 @@ const UserDetails = () => {
         
         <div className="trust-meter-container">
           <div className="trust-header">
-            <span>{loyalty ? 'Couple Loyalty' : 'Personal Loyalty'}</span>
-            <span className="trust-value">{loyalty ? loyalty.loyalty_score : user.loyalty_score} Points</span>
+            <span>{trust ? `${trust.tier} Status` : 'Personal Loyalty'}</span>
+            <span className="trust-value">{trust ? trust.score : user.loyalty_score} pts</span>
           </div>
           <div className="trust-bar-bg">
-            <div className="trust-bar-fill" style={{ width: `${Math.min(100, loyalty ? (loyalty.loyalty_score / 10) : user.loyalty_score)}%` }}></div>
+            <div 
+              className={`trust-bar-fill ${trust ? trust.tier.toLowerCase() : ''}`} 
+              style={{ width: `${Math.min(100, trust ? (trust.score % 300) / 3 : user.loyalty_score)}%` }}
+            ></div>
           </div>
-          <p className="trust-hint">{loyalty ? `Streak: ${loyalty.current_streak} days` : 'Maintain daily check-ins to boost your score!'}</p>
+          <p className="trust-hint">
+            {trust 
+              ? `${trust.points_needed} points to reach ${trust.next_tier}` 
+              : 'Maintain daily check-ins to boost your score!'}
+          </p>
         </div>
       </div>
 
@@ -84,6 +91,12 @@ const UserDetails = () => {
             <div className="detail-item">
               <label>Anniversary</label>
               <span>{new Date(user.anniversary_date).toLocaleDateString()}</span>
+            </div>
+          )}
+          {trust && (
+            <div className="detail-item" style={{marginTop: '10px'}}>
+              <label>Trust Level</label>
+              <span className={`tier-badge tier-${trust.tier.toLowerCase()}`}>{trust.tier}</span>
             </div>
           )}
         </div>

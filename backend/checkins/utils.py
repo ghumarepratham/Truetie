@@ -88,7 +88,7 @@ def calculate_loyalty_score(couple):
     milestones_achieved = Milestone.objects.filter(couple=couple, is_achieved=True).count()
     missed_checkins = get_missed_checkins(couple)
     
-    score = (days_together * 2) + (mutual_checkins * 3) + (milestones_achieved * 10) - (missed_checkins * 5)
+    score = (days_together * 2) + (mutual_checkins * 10) + (milestones_achieved * 10) - (missed_checkins * 5)
     couple.loyalty_score = max(0, score)
     couple.save()
     

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const DailyCheckIn = () => {
   const [status, setStatus] = useState(null);
-  const [loyalty, setLoyalty] = useState(null);
-  const [milestones, setMilestones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -18,30 +16,13 @@ const DailyCheckIn = () => {
       const headers = { Authorization: `Bearer ${token}` };
 
       // Fetch Check-in Status
-      const statusRes = await axios.get('http://localhost:8000/api/checkins/status/', { headers });
+      const statusRes = await axios.get('http://127.0.0.1:8000/api/checkins/status/', { headers });
       setStatus(statusRes.data);
-
-      // Fetch Loyalty Score Details
-      try {
-        const loyaltyRes = await axios.get('http://localhost:8000/api/checkins/loyalty-score/', { headers });
-        setLoyalty(loyaltyRes.data);
-      } catch (err) {
-        console.error('Loyalty data fetch failed:', err);
-      }
-
-      // Fetch Milestones
-      try {
-        const milestoneRes = await axios.get('http://localhost:8000/api/checkins/milestones/', { headers });
-        setMilestones(milestoneRes.data);
-      } catch (err) {
-        console.error('Milestones fetch failed:', err);
-      }
-
     } catch (err) {
       if (err.response?.status === 401) {
         navigate('/login');
       } else {
-        setError(err.response?.data?.error || 'Failed to fetch check-in data.');
+        setError(err.response?.data?.error || err.response?.data?.detail || 'Failed to fetch check-in data.');
       }
     } finally {
       setLoading(false);
@@ -57,10 +38,10 @@ const DailyCheckIn = () => {
       setLoading(true);
       setError('');
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:8000/api/checkins/today/', {}, {
+      await axios.post('http://127.0.0.1:8000/api/checkins/today/', {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setSuccess('Daily check-in successful! +10 Loyalty Points.');
+      setSuccess('Daily check-in successful! Trust score updated.');
       fetchData();
     } catch (err) {
       setError(err.response?.data?.error || 'Check-in failed.');
@@ -111,58 +92,9 @@ const DailyCheckIn = () => {
           </div>
         )}
 
-        {loyalty && (
-          <div className="loyalty-details">
-            <div className="loyalty-header">
-              <h3>Loyalty Stats</h3>
-              <div className="score-badge">{loyalty.loyalty_score} Points</div>
-            </div>
-            
-            <div className="stats-grid">
-              <div className="stat-box">
-                <span className="stat-val">{loyalty.days_together}</span>
-                <span className="stat-label">Days Together</span>
-              </div>
-              <div className="stat-box">
-                <span className="stat-val">{loyalty.current_streak}</span>
-                <span className="stat-label">Current Streak</span>
-              </div>
-              <div className="stat-box">
-                <span className="stat-val">{loyalty.mutual_checkins_count}</span>
-                <span className="stat-label">Mutual Check-ins</span>
-              </div>
-              <div className="stat-box warning">
-                <span className="stat-val">-{loyalty.missed_checkins_count * 5}</span>
-                <span className="stat-label">Points Deducted</span>
-              </div>
-            </div>
-
-            {loyalty.next_milestone && (
-              <div className="next-milestone">
-                <p>🚀 Next Milestone: <strong>{loyalty.next_milestone.title}</strong> in {loyalty.next_milestone.days_remaining} days!</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {milestones.length > 0 && (
-          <div className="milestones-section">
-            <h3>Relationship Milestones</h3>
-            <div className="milestone-list">
-              {milestones.map(m => (
-                <div key={m.id} className={`milestone-item ${m.is_achieved ? 'achieved' : 'locked'}`}>
-                  <div className="milestone-icon">{m.is_achieved ? '🏆' : '🔒'}</div>
-                  <div className="milestone-info">
-                    <div className="milestone-title">{m.title}</div>
-                    <div className="milestone-date">
-                      {m.is_achieved ? `Achieved on ${new Date(m.achieved_at).toLocaleDateString()}` : `Expected ${new Date(m.milestone_date).toLocaleDateString()}`}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <div className="checkin-footer">
+          <Link to="/trust-score" className="trust-link">View Trust Score Details →</Link>
+        </div>
       </div>
 
       <style jsx>{`
@@ -262,97 +194,19 @@ const DailyCheckIn = () => {
           color: #f0932b;
           font-weight: 600;
         }
-        
-        .loyalty-details {
-          margin-top: 40px;
-          padding-top: 40px;
+        .checkin-footer {
+          margin-top: 2rem;
+          padding-top: 1.5rem;
           border-top: 1px solid #eee;
-          text-align: left;
         }
-        .loyalty-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 24px;
+        .trust-link {
+          color: var(--primary);
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 0.95rem;
         }
-        .score-badge {
-          background: #ffeaa7;
-          color: #d35400;
-          padding: 8px 16px;
-          border-radius: 20px;
-          font-weight: 700;
-        }
-        .stats-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
-        }
-        .stat-box {
-          background: #f8f9fa;
-          padding: 16px;
-          border-radius: 12px;
-          display: flex;
-          flex-direction: column;
-        }
-        .stat-box.warning {
-          background: #fff5f5;
-        }
-        .stat-box.warning .stat-val {
-          color: #fa5252;
-        }
-        .stat-val {
-          font-size: 1.4rem;
-          font-weight: 800;
-          color: #2d3436;
-        }
-        .stat-label {
-          font-size: 0.85rem;
-          color: #636e72;
-        }
-        .next-milestone {
-          margin-top: 24px;
-          padding: 16px;
-          background: #e3f2fd;
-          border-radius: 12px;
-          color: #1976d2;
-          font-size: 0.9rem;
-        }
-
-        .milestones-section {
-          margin-top: 40px;
-          padding-top: 40px;
-          border-top: 1px solid #eee;
-          text-align: left;
-        }
-        .milestone-list {
-          margin-top: 16px;
-        }
-        .milestone-item {
-          display: flex;
-          align-items: center;
-          padding: 12px;
-          margin-bottom: 12px;
-          border-radius: 12px;
-          background: #f9f9f9;
-        }
-        .milestone-item.achieved {
-          background: #f0fff4;
-          border: 1px solid #c6f6d5;
-        }
-        .milestone-icon {
-          font-size: 24px;
-          margin-right: 16px;
-        }
-        .milestone-title {
-          font-weight: 700;
-          color: #2d3436;
-        }
-        .milestone-date {
-          font-size: 0.8rem;
-          color: #636e72;
-        }
-        .locked {
-          opacity: 0.6;
+        .trust-link:hover {
+          text-decoration: underline;
         }
       `}</style>
     </div>

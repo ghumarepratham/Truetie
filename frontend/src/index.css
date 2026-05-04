@@ -292,6 +292,77 @@ nav a:hover {
   font-weight: 700;
 }
 
+/* Tier Badges */
+.tier-badge {
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.tier-bronze {
+  background: linear-gradient(135deg, #cd7f32, #a0522d);
+  color: white;
+}
+
+.tier-silver {
+  background: linear-gradient(135deg, #bdc3c7, #7f8c8d);
+  color: white;
+}
+
+.tier-gold {
+  background: linear-gradient(135deg, #f1c40f, #f39c12);
+  color: white;
+}
+
+.tier-platinum {
+  background: linear-gradient(135deg, #e5e4e2, #3498db);
+  color: #2c3e50;
+  border: 1px solid #3498db;
+}
+
+/* Trust Score Section in Profile */
+.trust-tier-container {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.tier-info {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.tier-info strong {
+  color: var(--primary);
+}
+
+/* Progress Bar Customization */
+.trust-bar-bg {
+  height: 12px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.trust-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 1s ease-in-out;
+}
+
+.trust-bar-fill.silver { background: linear-gradient(90deg, #bdc3c7, #7f8c8d); }
+.trust-bar-fill.gold { background: linear-gradient(90deg, #f1c40f, #f39c12); }
+.trust-bar-fill.platinum { background: linear-gradient(90deg, #3498db, #2c3e50); }
+
 /* Signup Grid Layout */
 .signup-grid {
   display: grid;
