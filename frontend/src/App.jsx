@@ -89,21 +89,39 @@ const Navbar = () => {
   };
 
   return (
-    <nav>
-      <Link to="/" className="nav-logo">
-        <span>💖</span> TrueTie
-      </Link>
+    <nav className="navbar-centered">
+      <div className="nav-left">
+        <Link to="/" className="nav-logo">
+          <span>💖</span> TrueTie
+        </Link>
+      </div>
       
-      {isAuthenticated && (
+      <div className="nav-center">
+        <ul className="nav-links">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/dashboard">Dashboard</Link></li>
+          {isAuthenticated && !isSingle && (
+            <>
+              <li><Link to="/checkin">Check-in</Link></li>
+              <li><Link to="/trust-score">Trust</Link></li>
+              <li><Link to="/rewards">Rewards</Link></li>
+            </>
+          )}
+          <li><Link to="/profile">User Profile</Link></li>
+          {isAuthenticated && <li><Link to="/couple">Partner</Link></li>}
+          {isAuthenticated && !isSingle && <li><Link to="/breakup">Status</Link></li>}
+        </ul>
+
         <div className="nav-search-container">
           <input 
             type="text" 
-            placeholder="Search users..." 
+            placeholder={isAuthenticated ? "Search users..." : "Sign in to search users"}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="nav-search-input"
+            disabled={!isAuthenticated}
           />
-          {searchResults.length > 0 && (
+          {isAuthenticated && searchResults.length > 0 && (
             <div className="search-results-dropdown">
               {searchResults.map(user => (
                 <div key={user.id} className="search-result-item" onClick={() => {
@@ -133,38 +151,19 @@ const Navbar = () => {
             </div>
           )}
         </div>
-      )}
+      </div>
 
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        {isAuthenticated && (
-          <>
-            <li><Link to="/dashboard">Dashboard</Link></li>
-            {!isSingle && (
-              <>
-                <li><Link to="/checkin">Check-in</Link></li>
-                <li><Link to="/trust-score">Trust</Link></li>
-                <li><Link to="/rewards">Rewards</Link></li>
-              </>
-            )}
-            <li><Link to="/couple">Partner</Link></li>
-            {!isSingle && <li><Link to="/breakup">Status</Link></li>}
-            <li><Link to="/profile">User Profile</Link></li>
-          </>
-        )}
-      </ul>
-
-      <div className="nav-actions">
+      <div className="nav-right">
         {isAuthenticated ? (
-          <>
-            <span className="welcome-msg">Welcome, {username}</span>
-            <button onClick={handleLogout} className="nav-logout-btn">Signout</button>
-          </>
+          <div className="nav-user-info">
+            <span className="welcome-text">Hi, {username}</span>
+            <button onClick={handleLogout} className="logout-btn">Signout</button>
+          </div>
         ) : (
-          <>
+          <div className="nav-auth-links">
             <Link to="/login" className="nav-login-link">Signin</Link>
-            <Link to="/signup" className="nav-cta">Signup</Link>
-          </>
+            <Link to="/signup" className="nav-register-btn">Signup</Link>
+          </div>
         )}
       </div>
     </nav>

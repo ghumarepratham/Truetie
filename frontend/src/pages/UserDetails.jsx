@@ -127,7 +127,7 @@ const UserDetails = () => {
   };
 
   if (loading) return <div className="loading">Softening the mood...</div>;
-  if (!user) return <div className="auth-card">Please login to see your bond.</div>;
+  if (!user) return <div className="auth-card">Please signin to see your bond.</div>;
 
   return (
     <div className="profile-page">
