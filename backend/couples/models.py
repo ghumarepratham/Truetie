@@ -21,7 +21,7 @@ class Couple(models.Model):
         on_delete=models.CASCADE, 
         related_name='couples_as_partner2'
     )
-    relationship_start = models.DateField(default=timezone.now)
+    relationship_start = models.DateField(default=timezone.localdate)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     loyalty_score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)

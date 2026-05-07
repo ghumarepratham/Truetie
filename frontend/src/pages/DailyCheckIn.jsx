@@ -52,6 +52,46 @@ const DailyCheckIn = () => {
 
   if (loading && !status) return <div className="loading">Loading...</div>;
 
+  if (localStorage.getItem('relationship_status') === 'S') {
+    return (
+      <div className="checkin-container">
+        <div className="checkin-card na-card">
+          <div className="na-icon">🤝</div>
+          <h2>Daily Connection</h2>
+          <p className="checkin-subtitle">Build your bond, one day at a time.</p>
+          <div className="na-content">
+            <p>The daily check-in feature is designed for couples to nurture their commitment together.</p>
+            <p>Once you've connected with a partner, you'll be able to share your daily check-ins here!</p>
+          </div>
+          <Link to="/couple" className="btn-magic-primary" style={{display: 'inline-block', textDecoration: 'none'}}>Find Your Partner</Link>
+        </div>
+        <style jsx>{`
+          .na-card {
+            border: 2px dashed #ff8fa3;
+            background: rgba(255, 255, 255, 0.6);
+          }
+          .na-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+          }
+          .na-content {
+            margin: 2rem 0;
+            color: #636e72;
+            font-style: italic;
+          }
+          .btn-magic-primary {
+            background: #ff4d6d;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
     <div className="checkin-container">
       <div className="checkin-card">

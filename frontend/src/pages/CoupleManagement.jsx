@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const CoupleManagement = () => {
   const [couple, setCouple] = useState(null);
@@ -9,6 +10,7 @@ const CoupleManagement = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };
@@ -78,16 +80,8 @@ const CoupleManagement = () => {
     }
   };
 
-  const handleBreakup = async () => {
-    if (window.confirm('Are you sure you want to end this relationship? Your loyalty score will be reset to 0.')) {
-      try {
-        await axios.post('http://127.0.0.1:8000/api/couples/breakup/', {}, { headers });
-        setMessage('Relationship ended. Scores have been reset.');
-        fetchData();
-      } catch (err) {
-        setError('Failed to process breakup');
-      }
-    }
+  const handleBreakup = () => {
+    navigate('/breakup');
   };
 
   if (loading) return <div className="loading">Checking your connection...</div>;

@@ -56,6 +56,61 @@ const TrustScore = () => {
     </div>
   );
 
+  if (localStorage.getItem('relationship_status') === 'S') {
+    return (
+      <div className="trust-container">
+        <div className="trust-header-main">
+          <h1>Trust Analysis</h1>
+          <p>The health of your bond, measured in consistency and commitment.</p>
+        </div>
+        <div className="na-trust-card auth-card">
+          <div className="na-icon">📊</div>
+          <h3>Coming Soon to Your Love Story</h3>
+          <p>Trust Analysis calculates scores based on mutual consistency, shared milestones, and relationship longevity.</p>
+          <div className="na-features">
+            <div className="na-feat">✨ 10pts per Mutual Check-in</div>
+            <div className="na-feat">📅 2pts per Day Together</div>
+            <div className="na-feat">🏆 10pts per Milestone</div>
+          </div>
+          <p className="na-footer-text">Find your partner to start building your score!</p>
+          <button onClick={() => navigate('/couple')} className="btn-magic-primary">Find Your Partner</button>
+        </div>
+        <style jsx>{`
+          .na-trust-card {
+            text-align: center;
+            padding: 4rem 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px dashed #ff8fa3;
+          }
+          .na-icon { font-size: 4rem; margin-bottom: 1.5rem; }
+          .na-features {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 2rem 0;
+            background: #fff0f3;
+            padding: 1.5rem;
+            border-radius: 16px;
+            font-weight: 600;
+            color: #ff4d6d;
+          }
+          .na-footer-text { margin-bottom: 2rem; font-style: italic; color: #636e72; }
+          .btn-magic-primary {
+            background: #ff4d6d;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
     <div className="trust-container">
       <div className="trust-header-main">

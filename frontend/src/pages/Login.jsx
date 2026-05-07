@@ -29,8 +29,10 @@ const Login = () => {
       const response = await axios.post('http://127.0.0.1:8000/api/users/login/', formData);
       localStorage.setItem('token', response.data.access);
       localStorage.setItem('refreshToken', response.data.refresh);
+      localStorage.setItem('username', response.data.user.username);
+      localStorage.setItem('relationship_status', response.data.user.relationship_status);
       window.dispatchEvent(new Event('authChange'));
-      navigate('/profile');
+      navigate('/dashboard');
     } catch (error) {
       console.error('Login failed:', error);
       setError(error.response?.data?.error || 'Invalid username or password. Please try again.');
@@ -91,7 +93,7 @@ const Login = () => {
 
       <div className="auth-footer">
         <p>
-          New to TrueTie? <Link to="/signup">Create an account</Link>
+          New to TrueTie? <Link to="/signup">Signup</Link>
         </p>
       </div>
     </div>

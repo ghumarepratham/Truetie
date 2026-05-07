@@ -9,7 +9,7 @@ def archive_relationship(couple, reason=None):
     final_tier = trust_score.tier if trust_score else 'Bronze'
     
     # Calculate total days
-    total_days = (timezone.now().date() - couple.relationship_start).days
+    total_days = (timezone.now().date() - couple.relationship_start).days + 1
     
     # Create archive record
     archive = RelationshipArchive.objects.create(
@@ -27,6 +27,16 @@ def archive_relationship(couple, reason=None):
     # Update couple status
     couple.status = 'broken'
     couple.save()
+    
+    # Update users relationship status to Single and remove couple reference
+    p1 = couple.partner1
+    p2 = couple.partner2
+    p1.relationship_status = 'S'
+    p1.couple = None
+    p1.save()
+    p2.relationship_status = 'S'
+    p2.couple = None
+    p2.save()
     
     # Freeze TrustScore
     if trust_score:
@@ -50,6 +60,16 @@ def reactivate_relationship(couple):
     # Reset start date to today as per rules
     couple.relationship_start = timezone.now().date()
     couple.save()
+    
+    # Re-link users
+    p1 = couple.partner1
+    p2 = couple.partner2
+    p1.relationship_status = 'I'
+    p1.couple = couple
+    p1.save()
+    p2.relationship_status = 'I'
+    p2.couple = couple
+    p2.save()
     
     # Unfreeze TrustScore
     trust_score = getattr(couple, 'trust_score', None)

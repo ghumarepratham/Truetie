@@ -90,6 +90,65 @@ const Rewards = () => {
     );
   }
 
+  if (localStorage.getItem('relationship_status') === 'S') {
+    return (
+      <div className="rewards-page">
+        <div className="auth-header">
+          <span className="auth-icon">🎁</span>
+          <h2>Relationship Rewards</h2>
+          <p>Unlock exclusive experiences and perks as your trust grows.</p>
+        </div>
+        <div className="na-rewards-card auth-card">
+          <div className="na-icon">💎</div>
+          <h3>Rewards Waiting to be Unlocked</h3>
+          <p>From romantic date vouchers to shared digital badges, our reward system is built for two.</p>
+          <div className="na-grid">
+            <div className="na-item">🎖️ Exclusive Badges</div>
+            <div className="na-item">🎫 Date Night Coupons</div>
+            <div className="na-item">🧧 Special Vouchers</div>
+          </div>
+          <p className="na-hint">Start your journey with a partner to begin earning points!</p>
+          <button onClick={() => navigate('/couple')} className="btn-magic-primary">Start Your Journey</button>
+        </div>
+        <style jsx>{`
+          .na-rewards-card {
+            text-align: center;
+            padding: 4rem 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            border: 2px dashed #ff8fa3;
+          }
+          .na-icon { font-size: 4rem; margin-bottom: 1.5rem; }
+          .na-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 2.5rem 0;
+          }
+          .na-item {
+            background: #fff0f3;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ff4d6d;
+          }
+          .na-hint { margin-bottom: 2rem; color: #636e72; font-style: italic; }
+          .btn-magic-primary {
+            background: #ff4d6d;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
     <div className="rewards-page">
       <div className="auth-header">

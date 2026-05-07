@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'username', 'email', 'password', 'bio', 'birth_date', 
             'gender', 'relationship_status', 'partner_email', 
-            'loyalty_score', 'anniversary_date'
+            'loyalty_score', 'anniversary_date', 'profile_picture'
         ]
 
     def create(self, validated_data):

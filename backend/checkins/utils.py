@@ -5,8 +5,12 @@ from django.db.models import Count
 
 def get_days_together(couple):
     today = date.today()
-    delta = today - couple.relationship_start
-    return max(0, delta.days)
+    rel_start = couple.relationship_start
+    if hasattr(rel_start, 'date'):
+        rel_start = rel_start.date()
+    delta = today - rel_start
+    # Adding 1 to include the start day itself
+    return max(1, delta.days + 1)
 
 def get_mutual_checkins_count(couple):
     # Mutual check-ins are those confirmed (both partners checked in)

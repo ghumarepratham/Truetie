@@ -50,6 +50,12 @@ const CoupleDashboard = () => {
         user: userRes.data,
         couple: coupleRes.data
       });
+
+      // Update local storage status if it changed
+      if (userRes.data && userRes.data.relationship_status !== localStorage.getItem('relationship_status')) {
+        localStorage.setItem('relationship_status', userRes.data.relationship_status);
+        window.dispatchEvent(new Event('authChange'));
+      }
     } catch (err) {
       if (err.response?.status === 401) {
         navigate('/login');
@@ -77,6 +83,263 @@ const CoupleDashboard = () => {
   );
 
   const { trust, rewards, checkin, loyalty, milestones, user, couple } = data;
+  
+  if (user?.relationship_status === 'S' || !couple || couple.status !== 'active') {
+    return (
+      <div className="single-dash-container">
+        <div className="floating-elements">
+          {[...Array(12)].map((_, i) => (
+            <div key={i} className={`float-item item-${i}`}>❤️</div>
+          ))}
+        </div>
+        
+        <div className="single-dash-content">
+          <div className="magic-seal">
+            <div className="seal-inner">
+              <span className="main-emoji">✨</span>
+            </div>
+            <div className="seal-orbit"></div>
+          </div>
+          
+          <div className="text-reveal">
+            <h1>The Canvas is Ready, {user?.username}</h1>
+            <p className="subtitle">Every great love story starts with a single heartbeat. Your dashboard is waiting for its other half.</p>
+          </div>
+
+          <div className="feature-preview-grid">
+            <div className="preview-item">
+              <span className="p-icon">🔒</span>
+              <span>Trust Meters</span>
+            </div>
+            <div className="preview-item">
+              <span className="p-icon">🎁</span>
+              <span>Mutual Rewards</span>
+            </div>
+            <div className="preview-item">
+              <span className="p-icon">📅</span>
+              <span>Love Milestones</span>
+            </div>
+          </div>
+
+          <div className="single-actions-creative">
+            <Link to="/couple" className="btn-magic-primary">
+              <span className="btn-text">Find Your Partner</span>
+              <span className="btn-glow"></span>
+            </Link>
+            <Link to="/profile" className="btn-magic-secondary">
+              Complete Your Profile
+            </Link>
+          </div>
+
+          <div className="quote-fade">
+            "Love is not something you find. Love is something that finds you."
+          </div>
+        </div>
+
+        <style jsx>{`
+          .single-dash-container {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #fff5f7 0%, #ffe0e6 100%);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+          }
+
+          .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+          }
+
+          .float-item {
+            position: absolute;
+            opacity: 0.15;
+            animation: float-around 20s linear infinite;
+          }
+
+          @keyframes float-around {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 100px) rotate(90deg); }
+            50% { transform: translate(0, 200px) rotate(180deg); }
+            75% { transform: translate(-100px, 100px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+          }
+
+          .item-0 { top: 10%; left: 10%; animation-delay: 0s; }
+          .item-1 { top: 20%; right: 15%; animation-delay: -2s; font-size: 1.5rem; }
+          .item-2 { bottom: 15%; left: 20%; animation-delay: -4s; }
+          .item-3 { bottom: 10%; right: 10%; animation-delay: -6s; font-size: 2rem; }
+          .item-4 { top: 40%; left: 5%; animation-delay: -8s; }
+          .item-5 { top: 60%; right: 5%; animation-delay: -10s; }
+          .item-6 { top: 5%; left: 50%; animation-delay: -12s; }
+          .item-7 { bottom: 5%; right: 50%; animation-delay: -14s; }
+
+          .single-dash-content {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 5rem 4rem;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(255, 77, 109, 0.15);
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            z-index: 1;
+            position: relative;
+            animation: content-pop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          }
+
+          @keyframes content-pop {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+          }
+
+          .magic-seal {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2.5rem;
+          }
+
+          .seal-inner {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.2);
+            position: relative;
+            z-index: 2;
+          }
+
+          .main-emoji {
+            font-size: 3rem;
+            animation: pulse-emoji 2s infinite;
+          }
+
+          @keyframes pulse-emoji {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+          }
+
+          .seal-orbit {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px dashed #ff4d6d;
+            border-radius: 50%;
+            animation: rotate-orbit 10s linear infinite;
+            opacity: 0.3;
+          }
+
+          @keyframes rotate-orbit {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+
+          h1 {
+            font-size: 2.8rem;
+            color: #2d3436;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2d3436 0%, #ff4d6d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+
+          .subtitle {
+            font-size: 1.2rem;
+            color: #636e72;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+          }
+
+          .feature-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 3.5rem;
+          }
+
+          .preview-item {
+            background: #fff0f3;
+            padding: 1.5rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ff4d6d;
+            transition: all 0.3s;
+          }
+
+          .preview-item:hover {
+            transform: translateY(-5px);
+            background: #ff4d6d;
+            color: white;
+          }
+
+          .p-icon { font-size: 1.5rem; }
+
+          .single-actions-creative {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+          }
+
+          .btn-magic-primary {
+            background: #ff4d6d;
+            color: white;
+            padding: 1.2rem 3.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
+          }
+
+          .btn-magic-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 77, 109, 0.4);
+          }
+
+          .btn-magic-secondary {
+            color: #b2bec3;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+          }
+
+          .btn-magic-secondary:hover {
+            color: #ff4d6d;
+          }
+
+          .quote-fade {
+            margin-top: 4rem;
+            font-style: italic;
+            color: #b2bec3;
+            font-size: 0.9rem;
+            opacity: 0.8;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   const upcomingMilestone = milestones.find(m => !m.is_achieved);
   const eligibleRewardsCount = rewards.filter(r => !r.is_unlocked && !r.already_agreed).length;
   
@@ -192,7 +455,7 @@ const CoupleDashboard = () => {
           <div className="grid-card timeline-card-simple full-width-card">
             <div className="grid-card-header">
               <h3>Relationship Timeline</h3>
-              <span className="start-date-info">Since {new Date(couple?.created_at).toLocaleDateString()}</span>
+              <span className="start-date-info">Since {new Date(couple?.relationship_start).toLocaleDateString()}</span>
             </div>
             <div className="timeline-horizontal-path">
               <div className="path-line-background"></div>

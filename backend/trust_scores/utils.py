@@ -30,8 +30,15 @@ def calculate_trust_score(couple):
 
     # 1. days_together
     today = date.today()
-    delta = today - couple.relationship_start
-    days_together = max(0, delta.days)
+    rel_start = couple.relationship_start
+    # If relationship_start is a datetime object, convert it to a date object
+    if hasattr(rel_start, 'date'):
+        rel_start = rel_start.date()
+    
+    # Calculate days since relationship_start
+    delta = today - rel_start
+    # We add 1 because the first day also counts as "day 1" together
+    days_together = max(1, delta.days + 1)
 
     # 2. mutual_checkins
     mutual_checkins = CheckIn.objects.filter(couple=couple, confirmed=True).values('date').distinct().count()

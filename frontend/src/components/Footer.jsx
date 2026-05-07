@@ -21,9 +21,9 @@ const Footer = () => {
           <h3>Quick Links</h3>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/profile">My Bond</Link></li>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/signup">Join Us</Link></li>
+            <li><Link to="/profile">User Profile</Link></li>
+            <li><Link to="/login">Signin</Link></li>
+            <li><Link to="/signup">Signup</Link></li>
           </ul>
         </div>
 

@@ -141,7 +141,7 @@ const Signup = () => {
             {loading ? 'Creating Account...' : 'Create TrueTie Account'}
           </button>
           <p className="auth-footer">
-            Already have an account? <Link to="/login">Login here</Link>
+            Already have an account? <Link to="/login">Signin</Link>
           </p>
         </div>
       </form>
